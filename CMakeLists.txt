@@ -360,7 +360,11 @@ ENDIF()
 
 ENABLE_TESTING()
 ADD_TEST(help_test otserv --help )
+
 ADD_TEST(version_test otserv --version )
 SET_TESTS_PROPERTIES(version_test PROPERTIES PASS_REGULAR_EXPRESSION "^OTServ ${VERSION}")
+
 ADD_TEST(badoption_test otserv --somenonexistentoption )
 SET_TESTS_PROPERTIES(badoption_test PROPERTIES WILL_FAIL true)
+
+ADD_TEST(lua_test testrun.sh )
