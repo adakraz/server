@@ -1,3 +1,5 @@
+BEGIN TRANSACTION;
+
 -- WORLD
 CREATE TABLE "worlds" (
 	"id" INTEGER PRIMARY KEY NOT NULL,
@@ -430,3 +432,5 @@ BEGIN
 	INSERT INTO "player_skills" ("player_id", "skill_id", "value") VALUES (NEW."id", 5, 10);
 	INSERT INTO "player_skills" ("player_id", "skill_id", "value") VALUES (NEW."id", 6, 10);
 END;
+
+END TRANSACTION;
