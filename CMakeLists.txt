@@ -41,6 +41,7 @@ OPTION(OTALLOCATOR "enable otserv custom allocator" OFF)
 OPTION(DEBUGGING "enable debugging of internal systems" OFF)
 OPTION(USE_PCH "enable usage of precompiled headers" OFF)
 OPTION(USE_STATIC_LIBS "use static libraries for linking" OFF)
+include(UseCodeCoverage)
 
 # Compiler flags for gcc, mingw32 and clang
 IF(CMAKE_COMPILER_IS_GNUCXX OR "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
