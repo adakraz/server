@@ -1,1 +1,1 @@
-INSERT INTO `global_storage` (`id`, `value`) VALUES ('UNIT_TEST', 'TRUE');
+INSERT INTO `global_storage` (`id`, `value`) VALUES ('ONLY_RUN_TESTS', 'TRUE');

@@ -17,6 +17,9 @@ function KillTest.simpleKillHandler(event)
 end
 
 function KillTest.ratDeathHandler(event)
+	if not typeof(event.killer, "Player") then
+		return
+	end
 	sendAnimatedText(event.creature:getPosition(), 215, "Block")
 
 	local function KillerKilled(evt)

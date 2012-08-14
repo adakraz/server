@@ -11,6 +11,4 @@ include("weapons/weapons")
 include_directory("examples")
 include_directory("npcs")
 
-if getGlobalValue('UNIT_TEST') == 'TRUE' then
-    include('test/test')
-end
+include('test/test')
