@@ -75,6 +75,21 @@ function test_creature()
     m:setHealth(0)
 end
 
+function test_enums()
+    assert_number(NORTH:value())
+    assert_equal('Direction', NORTH:type())
+    assert_equal('WEST', WEST:name())
+    
+    assert_equal('RACE_BLOOD', RACE_BLOOD:name())
+    assert_equal('RACE_BLOOD', RACE_BLOOD:name(1))
+    assert_equal('blood', RACE_BLOOD:name(2))
+    
+    assert_not_equal(NORTH, SOUTH)
+    
+    assert_number(SKILL_CLUB:value())
+    assert_number(SKILL_SWORD:value())
+    assert_not_equal(SKILL_CLUB:value(), SKILL_SWORD:value())
+end
 
 function test_traceback()
     assert_equal(debug.traceback, stacktrace)

@@ -2,7 +2,7 @@ require "test.lunatest"
 
 local test_failed
 
-function is_test_key(k)
+function lunatest.is_test_key(k)
    return type(k) == "string" and k:match("^_*test")
 end
 
