@@ -40,10 +40,31 @@ function get_free_tile()
     return {x=o.x, y=o.y, z=o.z}
 end
 
+local delayed_assertion_count = 0
+local DelayedAssertion = {}
+function DelayedAssertion:assert_once()
+    if ok then
+        test_failed = true
+        error('delayed assertion called too many times')
+    else
+        ok = true
+        delayed_assertion_count = delayed_assertion_count - 1
+    end
+end
+
+function delayed_assertion()
+    delayed_assertion_count = delayed_assertion_count + 1
+    return setmetatable({ok=false}, {__index=DelayedAssertion})
+end
+
 local function run_all()
     test_failed = false
     lunatest.run()
     wait(time_limit)
+    if delayed_assertion_count > 0 then
+        print('FAIL: there are unfinished delayed assertions')
+        test_failed = true
+    end
     if test_failed then
         os.exit(1)
     end
