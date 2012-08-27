@@ -8,7 +8,6 @@ function test_on_dead()
     local res = registerOnDeath('all', 'all',
         wraperror(function(event)
             local corpse = t:getThing(-1)
-            print(t:getX())
 
             assert_equal('dead wolf', corpse:getName())
             assert_equal(0, corpse:size())
@@ -17,9 +16,16 @@ function test_on_dead()
     m:setHealth(0)
 end
 
+
 function test_traceback()
-    skip('will fail')
-    debug.traceback(coroutine.running())
+    assert_equal(debug.traceback, stacktrace)
+    local tr = debug.traceback
+    local cor = coroutine.running()
+    tr()
+    tr(cor)
     local msg = 'msg12949392'
-    assert_match(msg, debug.traceback(msg, 3))
+    assert_match(msg, tr(msg, 3))
+    assert_match(msg, tr(msg))
+    assert_match(msg, tr(cor, msg))
+    assert_match(msg, tr(cor, msg, 2))
 end

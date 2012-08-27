@@ -513,7 +513,7 @@ void Manager::registerClasses() {
 void Manager::registerFunctions() {
 	// General functions
 	registerGlobalFunction("wait(int delay)", &Manager::lua_wait);
-	registerGlobalFunction("stacktrace(thread thread)", &Manager::lua_stacktrace);
+	registerGlobalFunction("stacktrace([thread thread[, string message[, int level]]])", &Manager::lua_stacktrace);
 	registerGlobalFunction("scriptStatistics()", &Manager::lua_statistics);
 	registerGlobalFunction("require_directory(string path)", &Manager::lua_require_directory);
 	registerGlobalFunction("get_thread_id(thread t)", &Manager::lua_get_thread_id);
@@ -733,14 +733,31 @@ int LuaState::lua_get_thread_id()
 
 int LuaState::lua_stacktrace()
 {
-	lua_State* L = lua_tothread(state, -1);
-	lua_pop(state, 1);
+	lua_State* L = state;
+	std::string msg = "";
+	int level = 1;
+
+	int stackOffset = 0;
+	if (getStackSize() > 0 && lua_type(state, 1) == LUA_TTHREAD) {
+		L = lua_tothread(state, 1);
+		stackOffset = 1;
+	}
+	if (getStackSize() - stackOffset == 2) {
+		level = popInteger();
+	}
+	if (getStackSize() - stackOffset == 1) {
+		msg = popString();
+	}
+
+	if (stackOffset == 1) {
+		pop();
+	}
 
 	std::string report;
 	{
 		// Local thread is OK here
 		LuaThread lt(manager, L);
-		report = lt.report();
+		report = lt.report(msg);
 	}
 	pushString(report);
 	return 1;
