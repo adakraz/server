@@ -735,7 +735,6 @@ int LuaState::lua_stacktrace()
 {
 	lua_State* L = state;
 	std::string msg = "";
-	int level = 1;
 
 	int stackOffset = 0;
 	if (getStackSize() > 0 && lua_type(state, 1) == LUA_TTHREAD) {
@@ -743,7 +742,7 @@ int LuaState::lua_stacktrace()
 		stackOffset = 1;
 	}
 	if (getStackSize() - stackOffset == 2) {
-		level = popInteger();
+		popInteger();// level not used
 	}
 	if (getStackSize() - stackOffset == 1) {
 		msg = popString();
